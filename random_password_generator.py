@@ -18,9 +18,10 @@ lines = f.readlines()
 for line in lines:
 	if  line.rstrip() in password:			#checking if the password contains an easily guessable word of the cheat sheet
 		exit("Password found in the cheat sheet")
+print("Password:")
 print(password)
 
-var = password.encode('utf-8')
-k = hashlib.sha256(var)
-print(k.hexdigest())
-
+encodedpwd = password.encode('utf-8')			#password encoding
+hash = hashlib.sha256(encodedpwd).hexdigest()		#password hashing with SHA-256 algorithm
+print("Password hash:")
+print(hash)
