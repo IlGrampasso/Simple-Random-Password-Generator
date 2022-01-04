@@ -4,31 +4,31 @@ import hashlib
 
 MINIMUM_PASSWORD_LENGTH = 12
 
-passlen = 0
-specialcharacters = "!@#$'%^\"&*()[]{}-_"
+password_length = 0
+special_chars = "!@#$'%^\"&*()[]{}-_"
 
-while passlen < MINIMUM_PASSWORD_LENGTH:					#setting of the password minimum length
-    print("Insert the password desired length.\n##Minimum 12 characters required##")
-    passlen = input()
+while password_length < MINIMUM_PASSWORD_LENGTH:  # setting of the password minimum length
+    print("Enter desired password length. \n~12 Characters minimum~")
+    password_length = input()
     try:
-        int(passlen)
-    except:
-        exit("You have not inserted a number, try another time!")
-    passlen = int(passlen)
-    if passlen < MINIMUM_PASSWORD_LENGTH:
-        print("Too short password!\n")
-source = string.ascii_letters + string.digits + specialcharacters
-password = ''.join(secrets.choice(source) for i in range(passlen))
+        int(password_length)
+    except ValueError:
+        exit("Invalid input.")
+    password_length = int(password_length)
+    if password_length < MINIMUM_PASSWORD_LENGTH:
+        print("Insufficient password length!\n")
+source = string.ascii_letters + string.digits + special_chars
+password = ''.join(secrets.choice(source) for i in range(password_length))
 
-with open("pwds.txt", "r") as f:				#opening of the common password cheat sheet
-    lines = f.read().splitlines()
+with open("common_passwords.txt") as pass_file:
+    lines = pass_file.read().splitlines()
 for line in lines:
-    if  line.rstrip() in password:			#checking if the password contains an easily guessable word of the cheat sheet
-        exit("Password found in the cheat sheet")
+    if line.rstrip() in password:  # checking password against known common passwords
+        exit("Common password!")
 print("Password:")
 print(password)
 
-encodedpwd = password.encode('utf-8')			#password encoding
-hash = hashlib.sha256(encodedpwd).hexdigest()		#password hashing with SHA-256 algorithm
+encoded_password = password.encode('utf-8')  # password encoding
+password_hash = hashlib.sha256(encoded_password).hexdigest()  # password hashing with SHA-256
 print("Password hash:")
-print(hash)
+print(password_hash)
