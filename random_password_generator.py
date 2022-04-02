@@ -1,5 +1,7 @@
 import secrets
 import string
+import os
+import sys
 import hashlib
 
 MINIMUM_PASSWORD_LENGTH = 12
@@ -20,7 +22,9 @@ while password_length < MINIMUM_PASSWORD_LENGTH:  # setting of the password mini
 source = string.ascii_letters + string.digits + special_chars
 password = ''.join(secrets.choice(source) for i in range(password_length))
 
-with open("common_passwords.txt") as pass_file:
+with open(os.path.join(sys.path[0], "common_passwords.txt"), "r") as pass_file:
+    
+#with open("common_passwords.txt") as pass_file:
     lines = pass_file.read().splitlines()
 for line in lines:
     if line.rstrip() in password:  # checking password against known common passwords
