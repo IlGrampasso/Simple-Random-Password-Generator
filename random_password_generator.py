@@ -3,6 +3,7 @@ import string
 import os
 import sys
 import hashlib
+import pyperclip as pc
 
 MINIMUM_PASSWORD_LENGTH = 12
 
@@ -12,6 +13,8 @@ special_chars = "!@#$'%^\"&*()[]{}-_"
 while password_length < MINIMUM_PASSWORD_LENGTH:  # setting of the password minimum length
     print("Enter desired password length. \n~12 Characters minimum~")
     password_length = input()
+    print("Do you want to copy the password to the clipboard? [y/n]")
+    choice = input()
     try:
         int(password_length)
     except ValueError:
@@ -31,6 +34,8 @@ for line in lines:
         exit("Common password!")
 print("Password:")
 print(password)
+if choice=="y":
+    pc.copy(password)
 
 encoded_password = password.encode('utf-8')  # password encoding
 password_hash = hashlib.sha256(encoded_password).hexdigest()  # password hashing with SHA-256
