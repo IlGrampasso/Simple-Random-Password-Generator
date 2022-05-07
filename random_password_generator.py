@@ -5,29 +5,39 @@ import sys
 import hashlib
 import pyperclip as pc
 
-MINIMUM_PASSWORD_LENGTH = 12
+MINIMUM_PASSWORD_LENGTH = 12 # setting of the password minimum length
 
+error_flag = 0 #flag for error detection on the input
 password_length = 0
-special_chars = "!@#$'%^\"&*()[]{}-_"
+special_chars = "!@#$'%^\"&*()[]{}-_" 
 
-while password_length < MINIMUM_PASSWORD_LENGTH:  # setting of the password minimum length
-    print("Enter desired password length. \n~12 Characters minimum~")
+while int(password_length) < MINIMUM_PASSWORD_LENGTH:
+    print("Enter the desired password length. \n~12 Characters minimum~")
     password_length = input()
-    print("Do you want to copy the password to the clipboard? [y/n]")
-    choice = input()
-    try:
+    try: #checking the value is an integer
         int(password_length)
-    except ValueError:
-        exit("Invalid input.")
-    password_length = int(password_length)
-    if password_length < MINIMUM_PASSWORD_LENGTH:
+    except ValueError: 
+        print("Invalid input!")
+        password_length = 0
+        error_flag = 1
+    if error_flag == 1:
+        error_flag = 0
+        continue # starting a new cycle
+        
+    if int(password_length) < MINIMUM_PASSWORD_LENGTH: #checking password length
         print("Insufficient password length!\n")
-source = string.ascii_letters + string.digits + special_chars
+
+print("Do you want to copy the password to the clipboard? [y/n] (Default is n)")
+choice = input()
+
+password_length = int(password_length)
+if password_length < MINIMUM_PASSWORD_LENGTH:
+    print("Insufficient password length!\n")
+
+source = string.ascii_letters + string.digits + special_chars # password generation
 password = ''.join(secrets.choice(source) for i in range(password_length))
 
-with open(os.path.join(sys.path[0], "common_passwords.txt"), "r") as pass_file:
-    
-#with open("common_passwords.txt") as pass_file:
+with open(os.path.join(sys.path[0], "common_passwords.txt"), "r") as pass_file: # opening the known common password file 
     lines = pass_file.read().splitlines()
 for line in lines:
     if line.rstrip() in password:  # checking password against known common passwords
