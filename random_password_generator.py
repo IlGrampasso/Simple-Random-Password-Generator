@@ -5,14 +5,14 @@ import sys
 import hashlib
 import pyperclip as pc
 
-MINIMUM_PASSWORD_LENGTH = 12 # setting of the password minimum length
+MINIMUM_PASSWORD_LENGTH = 6 # setting of the password minimum length
 
 error_flag = 0 #flag for error detection on the input
 password_length = 0
 special_chars = "!@#$'%^\"&*()[]{}-_" 
 
 while int(password_length) < MINIMUM_PASSWORD_LENGTH:
-    print("Enter the desired password length. \n~12 Characters minimum~")
+    print("Enter the desired password length. \n~6 characters minimum (but 12 characters is recommended)~")
     password_length = input()
     try: #checking the value is an integer
         int(password_length)
